@@ -1,4 +1,4 @@
-# findup-sync
+# findup-sync [![Build Status](https://secure.travis-ci.org/cowboy/node-findup-sync.png?branch=master)](http://travis-ci.org/cowboy/node-findup-sync)
 
 Find the first file matching a given pattern in the current directory or the nearest ancestor directory.
 
