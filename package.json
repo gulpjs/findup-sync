@@ -28,13 +28,13 @@
     "test": "grunt nodeunit"
   },
   "dependencies": {
-    "glob": "~4.0.4",
-    "lodash": "~2.4.1"
+    "glob": "^4.0.4",
+    "lodash": "^2.4.1"
   },
   "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.9.2",
-    "grunt-contrib-nodeunit": "~0.3.3"
+    "grunt": "^0.4.4",
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-nodeunit": "^0.3.3"
   },
   "keywords": [
     "find",
