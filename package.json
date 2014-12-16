@@ -28,8 +28,7 @@
     "test": "grunt nodeunit"
   },
   "dependencies": {
-    "glob": "~3.2.9",
-    "lodash": "~2.4.1"
+    "glob": "~3.2.9"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
