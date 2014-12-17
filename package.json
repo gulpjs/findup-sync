@@ -28,7 +28,7 @@
     "test": "grunt nodeunit"
   },
   "dependencies": {
-    "glob": "~4.0.0"
+    "glob": "~4.3.0"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
