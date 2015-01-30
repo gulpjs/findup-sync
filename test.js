@@ -2,10 +2,10 @@
 
 var path = require('path');
 var assert = require('assert');
-var should = require('should');
 var norm = require('normalize-path');
 var resolve = require('resolve');
 var findup = require('./');
+require('should');
 
 function normalize(fp) {
   return fp ? norm(path.relative('.', fp)) : null;
@@ -18,7 +18,7 @@ describe('findup', function () {
   it('should throw when the first arg is not a string or array:', function () {
     (function() {
       findup();
-    }).should.throw('findup expects a string or array as the first argument.')
+    }).should.throw('findup expects a string or array as the first argument.');
   });
 
   it('should work when no cwd is given', function () {
@@ -26,10 +26,10 @@ describe('findup', function () {
   });
 
   it('should support normal (non-glob) file paths:', function () {
-    var normPath = normalize(findup('package.json', {cwd: path.dirname(resolve.sync('normalize-path'))}))
+    var normPath = normalize(findup('package.json', {cwd: path.dirname(resolve.sync('normalize-path'))}));
     normPath.should.equal('node_modules/normalize-path/package.json');
 
-    var isGlob = normalize(findup('package.json', {cwd: path.dirname(resolve.sync('is-glob'))}))
+    var isGlob = normalize(findup('package.json', {cwd: path.dirname(resolve.sync('is-glob'))}));
     isGlob.should.equal('node_modules/is-glob/package.json');
   });
 
@@ -57,8 +57,7 @@ describe('findup', function () {
 
   it('should return `null` when no files are found:', function () {
     var dep = normalize(findup('*.foo', {cwd: path.dirname(resolve.sync('micromatch'))}));
-    (dep == null).should.be.true;
-
+    assert.equal(dep, null);
     assert.equal(findup('**/b*.json', {cwd: npm('is-glob')}), null);
     assert.equal(findup('foo.json', {cwd: 'fixtures/a/b/c/d/e/f/g'}), null);
     assert.equal(findup('foo.json', {cwd: 'fixtures/a/b/c/d/e/f/g', matchBase: true}), null);

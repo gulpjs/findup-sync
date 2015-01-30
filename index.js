@@ -17,12 +17,10 @@ var dir = process.cwd();
 module.exports = findup;
 
 /**
- * Find the first file matching a given pattern in the
- * current directory or the nearest ancestor directory.
- *
  * @param  {String|Array} `patterns` Glob pattern(s) or file path(s) to match against.
  * @param  {Object} `options` Options to pass to [micromatch]. Note that if you want to start in a different directory than the current working directory, specify a `cwd` property here.
  * @return {String} Returns the first matching file.
+ * @api public
  */
 
 function findup(patterns, options) {
@@ -68,7 +66,7 @@ function findup(patterns, options) {
     var fp = path.join(cwd, files[flen]);
 
     // if the current directory is the actual cwd, break out
-    if (path.dirname(fp) === '.') break;
+    if (path.dirname(fp) === '.') { break; }
 
     // if the file path matches the pattern(s), return it
     var match = mm(fp, patterns, opts);
@@ -82,7 +80,7 @@ function findup(patterns, options) {
   cwd = path.resolve(cwd, '..');
 
   // we're past the actual cwd with no matches.
-  if (cwd === dir) return null;
+  if (cwd === dir) { return null; }
 
   // try again
   opts.cwd = cwd;
