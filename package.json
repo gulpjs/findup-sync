@@ -1,12 +1,18 @@
 {
   "name": "findup-sync",
   "description": "Find the first file matching a given pattern in the current directory or the nearest ancestor directory.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "homepage": "https://github.com/cowboy/node-findup-sync",
   "author": {
     "name": "\"Cowboy\" Ben Alman",
     "url": "http://benalman.com/"
   },
+  "maintainers": [
+    {
+      "name": "Jon Schlinkert",
+      "url": "https://github.com/jonschlinkert"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/cowboy/node-findup-sync.git"
@@ -20,24 +26,37 @@
       "url": "https://github.com/cowboy/node-findup-sync/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "lib/findup-sync",
-  "engines": {
-    "node": ">= 0.6.0"
-  },
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
   "scripts": {
-    "test": "grunt nodeunit"
+    "test": "grunt && mocha"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
   },
   "dependencies": {
-    "glob": "~4.3.0"
+    "is-glob": "^1.1.0",
+    "micromatch": "^1.2.2"
   },
   "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.9.2",
-    "grunt-contrib-nodeunit": "~0.3.3"
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.0",
+    "mocha": "^2.1.0",
+    "normalize-path": "^1.0.0",
+    "resolve": "^1.1.0",
+    "should": "^4.6.2"
   },
   "keywords": [
+    "file",
     "find",
+    "find-up",
+    "findup",
     "glob",
-    "file"
+    "match",
+    "pattern",
+    "resolve",
+    "search"
   ]
 }
