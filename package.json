@@ -43,6 +43,7 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.11.0",
+    "mocha": "^2.1.0",
     "normalize-path": "^1.0.0",
     "resolve": "^1.1.0",
     "should": "^4.6.2"
