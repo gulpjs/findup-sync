@@ -35,7 +35,6 @@
     "mocha": "^2.1.0",
     "normalize-path": "^2.0.1",
     "resolve": "^1.1.7",
-    "should": "^4.6.2",
     "user-home": "^2.0.0"
   },
   "keywords": [
