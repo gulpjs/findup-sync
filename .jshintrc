@@ -1,15 +1,19 @@
 {
-  "loopfunc": true,
+  "asi": false,
+  "boss": true,
   "curly": true,
   "eqeqeq": true,
+  "eqnull": true,
+  "esnext": true,
   "immed": true,
-  "latedef": true,
+  "latedef": false,
+  "laxbreak": true,
+  "laxcomma": false,
   "newcap": true,
   "noarg": true,
+  "node": true,
   "sub": true,
   "undef": true,
   "unused": true,
-  "boss": true,
-  "eqnull": true,
-  "node": true
+  "mocha": true
 }
