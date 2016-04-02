@@ -44,7 +44,7 @@ For bugs and feature requests, [please create an issue](https://github.com/cowbo
 ## Release History
 
 2015-01-30 - v0.4.0 - Refactored, not also uses [micromatch][] instead of minimatch.  
-2015-09-14 - v0.3.0 - updated glob to ~5.0. 2014-12-17 - v0.2.1 - updated to glob ~4.3.  
+2015-09-14 - v0.3.0 - updated glob to ~5.0.
 2014-12-17 - v0.2.1 - Updated to glob 4.3.  
 2014-12-16 - v0.2.0 - Removed lodash, updated to glob 4.x.  
 2014-03-14 - v0.1.3 - Updated dependencies.  
