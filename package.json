@@ -20,19 +20,20 @@
     "test": "grunt && mocha"
   },
   "dependencies": {
+    "fs-exists-sync": "^0.1.0",
     "is-glob": "^2.0.1",
     "micromatch": "^2.3.7",
     "resolve-dir": "^0.1.0"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.1",
     "grunt-contrib-jshint": "^0.12.0",
     "is-absolute": "^0.2.3",
     "minimist": "^1.2.0",
     "mocha": "^2.4.5",
     "normalize-path": "^2.0.1",
-    "resolve": "^1.1.7",
-    "user-home": "^2.0.0"
+    "os-homedir": "^1.0.1",
+    "resolve": "^1.1.7"
   },
   "keywords": [
     "file",

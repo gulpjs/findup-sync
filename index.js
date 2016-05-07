@@ -8,6 +8,7 @@ var fs = require('fs');
 var path = require('path');
 var isGlob = require('is-glob');
 var resolveDir = require('resolve-dir');
+var exists = require('fs-exists-sync');
 var mm = require('micromatch');
 
 /**
@@ -26,9 +27,11 @@ module.exports = function(patterns, options) {
     throw new TypeError('findup-sync expects a string or array as the first argument.');
   }
 
-  var len = patterns.length, i = -1;
-  while (++i < len) {
-    var res = lookup(patterns[i], options);
+  var len = patterns.length;
+  var idx = -1;
+
+  while (++idx < len) {
+    var res = lookup(patterns[idx], options);
     if (res) {
       return res;
     }
@@ -39,7 +42,7 @@ module.exports = function(patterns, options) {
 
 function lookup(pattern, options) {
   options = options || {};
-  var cwd = resolveDir(options.cwd || '');
+  var cwd = path.resolve(resolveDir(options.cwd || ''));
   if (isGlob(pattern)) {
     return matchFile(cwd, pattern, options);
   } else {
@@ -50,10 +53,11 @@ function lookup(pattern, options) {
 function matchFile(cwd, pattern, opts) {
   var isMatch = mm.matcher(pattern, opts);
   var files = fs.readdirSync(cwd);
-  var len = files.length, i = -1;
+  var len = files.length;
+  var idx = -1;
 
-  while (++i < len) {
-    var name = files[i];
+  while (++idx < len) {
+    var name = files[idx];
     var fp = path.join(cwd, name);
     if (isMatch(name) || isMatch(fp)) {
       return fp;
@@ -68,8 +72,8 @@ function matchFile(cwd, pattern, opts) {
 }
 
 function findFile(cwd, filename) {
-  var fp = cwd ? (cwd + '/' + filename) : filename;
-  if (fs.existsSync(fp)) {
+  var fp = cwd ? path.resolve(cwd, filename) : filename;
+  if (exists(fp)) {
     return fp;
   }
 
@@ -77,9 +81,9 @@ function findFile(cwd, filename) {
   var len = segs.length;
 
   while (len--) {
-    cwd = segs.slice(0, len).join('/');
-    fp = cwd + '/' + filename;
-    if (fs.existsSync(fp)) {
+    cwd = segs.slice(0, len).join(path.sep);
+    fp = path.resolve(cwd, filename);
+    if (exists(fp)) {
       return fp;
     }
   }

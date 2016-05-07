@@ -1,70 +1,30 @@
 'use strict';
 
 require('mocha');
-var argv = require('minimist')(process.argv.slice(2));
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var expand = require('resolve-dir');
-var norm = require('normalize-path');
-var home = require('user-home');
-var isAbsolute = require('is-absolute');
+var support = require('./support');
+support.assert(assert);
+var home = require('os-homedir');
+var exists = require('fs-exists-sync');
 var resolve = require('resolve');
-var cwd, actual, opts;
-
 var findup = require('../');
+var normalize = support.normalize;
+var chdir = support.chdir;
+var npm = support.npm;
+var cwd;
+var actual;
 
-function normalize(fp) {
-  return fp ? norm(path.relative('.', fp)) : null;
-}
-
-if (argv.bench) {
-  var b = path.join(__dirname, 'benchmark/code', argv.bench);
-  console.log(b);
-  findup = require(b);
-}
-
-assert.isPath = function (fp, basename) {
-  assert(fp);
-  assert.equal(typeof fp, 'string');
-};
-
-assert.isAbsolute = function (fp) {
-  assert(fp);
-  assert(isAbsolute(fp));
-};
-
-assert.exists = function (fp) {
-  assert(fp);
-  try {
-    fs.statSync(fp);
-  } catch(err) {
-    assert(fp, err);
-  }
-};
-
-assert.basename = function (fp, basename) {
-  assert(fp);
-  assert.equal(path.basename(fp), basename);
-};
-
-assert.dirname = function (fp, dirname) {
-  assert(fp);
-  assert.equal(path.dirname(path.resolve(fp)), path.resolve(dirname));
-};
-
-function npm(name) {
-  return path.dirname(resolve.sync(name));
-}
 
 describe('findup-sync', function () {
   before(function () {
-    fs.writeFileSync(home + '/_aaa.txt', '');
-    fs.writeFileSync(home + '/_bbb.txt', '');
+    fs.writeFileSync(home() + '/_aaa.txt', '');
+    fs.writeFileSync(home() + '/_bbb.txt', '');
   });
   after(function () {
-    fs.unlinkSync(home + '/_aaa.txt');
-    fs.unlinkSync(home + '/_bbb.txt');
+    fs.unlinkSync(home() + '/_aaa.txt');
+    fs.unlinkSync(home() + '/_bbb.txt');
   });
 
   it('should throw when the first arg is not a string or array:', function(cb) {
@@ -83,6 +43,34 @@ describe('findup-sync', function () {
     assert.dirname(actual, path.resolve(__dirname, '..'));
     assert.basename(actual, 'package.json');
     assert.equal(normalize(findup('package.json')), 'package.json');
+  });
+
+  it('should find files in a child directory', function () {
+    var expected = path.resolve(__dirname, 'fixtures/a/b/file.txt');
+    var restore = chdir(path.resolve(__dirname, 'fixtures/a/b/c/d/e/f/g/h'));
+
+    var actual = findup('a/b/file.txt');
+    assert(actual);
+    assert(exists(actual));
+    assert.equal(actual, expected);
+    restore();
+  });
+
+  it('should find files in a child directory relative to a cwd', function () {
+    var expectedFile = path.resolve(__dirname, 'fixtures/a/b/file.txt');
+    var expectedA = path.resolve(__dirname, 'fixtures/a/a.txt');
+    var tempDir = chdir(path.resolve(__dirname, 'fixtures'));
+
+    var actualFile = findup('a/b/file.txt', {cwd: 'a/b/c/d'});
+    assert(actualFile);
+    assert(exists(actualFile));
+    assert.equal(actualFile, expectedFile);
+
+    var actualA = findup('a.txt', {cwd: 'a/b/c/d/e/f'});
+    assert(actualA);
+    assert(exists(actualA));
+    assert.equal(actualA, expectedA);
+    tempDir();
   });
 
   it('should support normal (non-glob) file paths:', function () {
@@ -216,7 +204,7 @@ describe('findup-sync', function () {
   });
 
   it('should find files from absolute paths:', function () {
-    var actual = findup('package.json', { cwd: __dirname })
+    var actual = findup('package.json', { cwd: __dirname });
 
     assert.basename(actual, 'package.json');
     assert.dirname(actual, path.resolve(__dirname, '..'));
@@ -231,16 +219,16 @@ describe('findup-sync', function () {
   });
 
   it('should find files in user home:', function () {
-    var actual = findup('*', { cwd: home });
+    var actual = findup('*', { cwd: home() });
     assert.isPath(actual);
-    assert.exists(actual);
-    assert.dirname(actual, home);
+    assert(exists(actual));
+    assert.dirname(actual, home());
   });
 
   it('should find files in user home using tilde expansion:', function () {
     var actual = findup('*', { cwd: '~' });
     assert.isPath(actual);
-    assert.exists(actual);
-    assert.dirname(actual, home);
+    assert(exists(actual));
+    assert.dirname(actual, home());
   });
 });
