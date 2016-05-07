@@ -1,4 +1,4 @@
-# findup-sync  [![Build Status](https://travis-ci.org/cowboy/node-findup-sync.svg)](https://travis-ci.org/cowboy/node-findup-sync)  [![NPM version](https://badge.fury.io/js/findup-sync.svg)](http://badge.fury.io/js/findup-sync)
+# findup-sync  [![Build Status](https://travis-ci.org/js-cli/node-findup-sync.svg)](https://travis-ci.org/js-cli/node-findup-sync)  [![NPM version](https://badge.fury.io/js/findup-sync.svg)](http://badge.fury.io/js/findup-sync)
 
 > Find the first file matching a given pattern in the current directory or the nearest ancestor directory.
 
