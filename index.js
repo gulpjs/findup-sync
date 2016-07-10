@@ -8,7 +8,7 @@ var fs = require('fs');
 var path = require('path');
 var isGlob = require('is-glob');
 var resolveDir = require('resolve-dir');
-var exists = require('fs-exists-sync');
+var detect = require('detect-file');
 var mm = require('micromatch');
 
 /**
@@ -46,13 +46,13 @@ function lookup(pattern, options) {
   if (isGlob(pattern)) {
     return matchFile(cwd, pattern, options);
   } else {
-    return findFile(cwd, pattern);
+    return findFile(cwd, pattern, options);
   }
 }
 
 function matchFile(cwd, pattern, opts) {
   var isMatch = mm.matcher(pattern, opts);
-  var files = fs.readdirSync(cwd);
+  var files = tryReaddirSync(cwd);
   var len = files.length;
   var idx = -1;
 
@@ -71,10 +71,11 @@ function matchFile(cwd, pattern, opts) {
   return matchFile(dir, pattern, opts);
 }
 
-function findFile(cwd, filename) {
+function findFile(cwd, filename, options) {
+  var res;
   var fp = cwd ? path.resolve(cwd, filename) : filename;
-  if (exists(fp)) {
-    return fp;
+  if (res = detect(fp, options)) {
+    return res;
   }
 
   var segs = cwd.split(path.sep);
@@ -83,9 +84,16 @@ function findFile(cwd, filename) {
   while (len--) {
     cwd = segs.slice(0, len).join(path.sep);
     fp = path.resolve(cwd, filename);
-    if (exists(fp)) {
-      return fp;
+    if (res = detect(fp, options)) {
+      return res;
     }
   }
   return null;
+}
+
+function tryReaddirSync(fp) {
+  try {
+    return fs.readdirSync(fp);
+  } catch(err) {}
+  return [];
 }

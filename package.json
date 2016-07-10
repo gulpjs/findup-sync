@@ -20,12 +20,13 @@
     "test": "grunt && mocha"
   },
   "dependencies": {
-    "fs-exists-sync": "^0.1.0",
+    "detect-file": "^0.1.0",
     "is-glob": "^2.0.1",
     "micromatch": "^2.3.7",
     "resolve-dir": "^0.1.0"
   },
   "devDependencies": {
+    "fs-exists-sync": "^0.1.0",
     "grunt": "^1.0.1",
     "grunt-contrib-jshint": "^0.12.0",
     "is-absolute": "^0.2.3",
