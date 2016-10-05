@@ -293,4 +293,10 @@ describe('findup-sync', function () {
     assert(exists(actual));
     assert.dirname(actual, home());
   });
+
+  it('should match files in cwd before searching up', function() {
+    var actual = findup(['a.txt', 'a.md'], { cwd: __dirname + '/fixtures/a/b' });
+    assert.basename(actual, 'a.md');
+    assert.dirname(actual, 'test/fixtures/a/b');
+  });
 });
