@@ -17,7 +17,8 @@
     "node": ">= 0.10"
   },
   "scripts": {
-    "test": "grunt && mocha"
+    "lint": "jshint index.js test/support/index.js test/test.js",
+    "test": "npm run lint && mocha"
   },
   "dependencies": {
     "detect-file": "^1.0.0",
@@ -26,10 +27,9 @@
     "resolve-dir": "^1.0.1"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-jshint": "^1.1.0",
     "homedir-polyfill": "^1.0.1",
     "is-absolute": "^1.0.0",
+    "jshint": "^2.9.5",
     "mocha": "^3.5.0",
     "normalize-path": "^2.1.1",
     "resolve": "^1.4.0"
