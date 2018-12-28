@@ -2,8 +2,8 @@
 
 var path = require('path');
 var normalizePath = require('normalize-path');
-var isAbsolute = require('is-absolute');
 var resolve = require('resolve');
+var expect = require('expect');
 
 exports.normalize = function(filepath) {
   return filepath ? normalizePath(path.relative('.', filepath)) : null;
@@ -24,28 +24,25 @@ exports.npm = function npm(name) {
   return path.dirname(resolve.sync(name));
 };
 
-exports.assert = function(assert) {
-  assert.isPath = function (filepath) {
-    assert(filepath);
-    assert.equal(typeof filepath, 'string');
-  };
-
-  assert.isAbsolute = function (filepath) {
-    assert(filepath);
-    assert.equal(typeof filepath, 'string');
-    assert(isAbsolute(filepath));
-  };
-
-  assert.basename = function (filepath, basename) {
-    assert(filepath);
-    assert.equal(typeof filepath, 'string');
-    assert.equal(path.basename(filepath), basename);
-  };
-
-  assert.dirname = function (filepath, dirname) {
-    assert(filepath);
-    assert.equal(typeof filepath, 'string');
-    assert.equal(path.dirname(path.resolve(filepath)), path.resolve(dirname));
-  };
+exports.expectExtras = {
+  isPath: function() {
+    var filepath = this.actual;
+    expect(filepath).toExist();
+    expect(filepath).toBeA('string');
+    return this;
+  },
+  toHaveBasename: function(basename) {
+    var filepath = this.actual;
+    expect(filepath).toExist();
+    expect(filepath).toBeA('string');
+    expect(path.basename(filepath)).toEqual(basename);
+    return this;
+  },
+  toHaveDirname: function(dirname) {
+    var filepath = this.actual;
+    expect(filepath).toExist();
+    expect(filepath).toBeA('string');
+    expect(path.dirname(path.resolve(filepath))).toEqual(path.resolve(dirname));
+  },
 };
 
