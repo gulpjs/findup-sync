@@ -1,6 +1,6 @@
 {
   "name": "findup-sync",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Find the first file matching a given pattern in the current directory or the nearest ancestor directory.",
   "author": "Gulp Team <team@gulpjs.com> (http://gulpjs.com/)",
   "contributors": [
