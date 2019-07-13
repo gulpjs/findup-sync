@@ -4,10 +4,9 @@
   </a>
 </p>
 
-
 # findup-sync
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Travis Build Status][travis-image]][travis-url] [![AppVeyor Build Status][appveyor-image]][appveyor-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Gitter chat][gitter-image]][gitter-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Azure Pipelines Build Status][azure-pipelines-image]][azure-pipelines-url] [![Travis Build Status][travis-image]][travis-url] [![AppVeyor Build Status][appveyor-image]][appveyor-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Gitter chat][gitter-image]][gitter-url]
 
 Find the first file matching a given pattern in the current directory or the nearest ancestor directory.
 
@@ -40,18 +39,21 @@ MIT
 
 [micromatch]: http://github.com/jonschlinkert/micromatch
 
-[downloads-image]: http://img.shields.io/npm/dm/findup-sync.svg
+[downloads-image]: https://img.shields.io/npm/dm/findup-sync.svg
 [npm-url]: https://www.npmjs.com/package/findup-sync
-[npm-image]: http://img.shields.io/npm/v/findup-sync.svg
+[npm-image]: https://img.shields.io/npm/v/findup-sync.svg
+
+[azure-pipelines-url]: https://dev.azure.com/gulpjs/gulp/_build/latest?definitionId=7&branchName=master
+[azure-pipelines-image]: https://dev.azure.com/gulpjs/gulp/_apis/build/status/findup-sync?branchName=master
 
 [travis-url]: https://travis-ci.org/gulpjs/findup-sync
-[travis-image]: http://img.shields.io/travis/gulpjs/findup-sync.svg?label=travis-ci
+[travis-image]: https://img.shields.io/travis/gulpjs/findup-sync.svg?label=travis-ci
 
 [appveyor-url]: https://ci.appveyor.com/project/gulpjs/findup-sync
 [appveyor-image]: https://img.shields.io/appveyor/ci/gulpjs/findup-sync.svg?label=appveyor
 
 [coveralls-url]: https://coveralls.io/r/gulpjs/findup-sync
-[coveralls-image]: http://img.shields.io/coveralls/gulpjs/findup-sync/master.svg
+[coveralls-image]: https://img.shields.io/coveralls/gulpjs/findup-sync/master.svg
 
 [gitter-url]: https://gitter.im/gulpjs/gulp
 [gitter-image]: https://badges.gitter.im/gulpjs/gulp.svg
