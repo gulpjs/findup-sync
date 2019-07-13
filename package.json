@@ -29,18 +29,18 @@
   "dependencies": {
     "detect-file": "^1.0.0",
     "is-glob": "^4.0.0",
-    "micromatch": "^3.0.4",
+    "micromatch": "^4.0.2",
     "resolve-dir": "^1.0.1"
   },
   "devDependencies": {
     "coveralls": "github:phated/node-coveralls#2.x",
-    "eslint": "^2.13.1",
+    "eslint": "^6.0.1",
     "eslint-config-gulp": "^3.0.1",
     "expect": "^1.20.2",
     "homedir-polyfill": "^1.0.1",
-    "mocha": "^3.5.3",
+    "mocha": "^6.1.4",
     "normalize-path": "^3.0.0",
-    "nyc": "^10.3.2",
+    "nyc": "^14.1.1",
     "resolve": "^1.4.0"
   },
   "keywords": [
