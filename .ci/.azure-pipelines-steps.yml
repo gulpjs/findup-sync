@@ -1,8 +1,4 @@
 steps:
-- script: npm i -g npm@$(npm_version)
-  displayName: Use legacy npm version $(npm_version)
-  condition: ne(variables['npm_version'], '')
-
 - task: NodeTool@0
   inputs:
     versionSpec: '$(node_version)'
