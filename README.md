@@ -6,7 +6,7 @@
 
 # findup-sync
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Azure Pipelines Build Status][azure-pipelines-image]][azure-pipelines-url] [![Travis Build Status][travis-image]][travis-url] [![AppVeyor Build Status][appveyor-image]][appveyor-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Gitter chat][gitter-image]][gitter-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Coveralls Status][coveralls-image]][coveralls-url]
 
 Find the first file matching a given pattern in the current directory or the nearest ancestor directory.
 
@@ -29,31 +29,28 @@ var filepath2 = findup('{a,b}*.txt', {cwd: '/some/path', nocase: true});
 
 ### `findup(patterns, [options])`
 
-* `patterns` **{String|Array}**: Glob pattern(s) or file path(s) to match against.
-* `options` **{Object}**: Options to pass to [micromatch]. Note that if you want to start in a different directory than the current working directory, specify a `cwd` property here.
-* `returns` **{String}**: Returns the first matching file.
+- `patterns` **{String|Array}**: Glob pattern(s) or file path(s) to match against.
+- `options` **{Object}**: Options to pass to [micromatch]. Note that if you want to start in a different directory than the current working directory, specify a `cwd` property here.
+- `returns` **{String}**: Returns the first matching file.
 
 ## License
 
 MIT
 
-[micromatch]: http://github.com/jonschlinkert/micromatch
+<!-- prettier-ignore-start -->
 
-[downloads-image]: https://img.shields.io/npm/dm/findup-sync.svg
+[downloads-image]: https://img.shields.io/npm/dm/findup-sync.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/findup-sync
-[npm-image]: https://img.shields.io/npm/v/findup-sync.svg
-
-[azure-pipelines-url]: https://dev.azure.com/gulpjs/gulp/_build/latest?definitionId=7&branchName=master
-[azure-pipelines-image]: https://dev.azure.com/gulpjs/gulp/_apis/build/status/findup-sync?branchName=master
-
-[travis-url]: https://travis-ci.org/gulpjs/findup-sync
-[travis-image]: https://img.shields.io/travis/gulpjs/findup-sync.svg?label=travis-ci
-
-[appveyor-url]: https://ci.appveyor.com/project/gulpjs/findup-sync
-[appveyor-image]: https://img.shields.io/appveyor/ci/gulpjs/findup-sync.svg?label=appveyor
-
+[npm-image]: https://img.shields.io/npm/v/findup-sync.svg?style=flat-square
+[ci-url]: https://github.com/gulpjs/findup-sync/actions?query=workflow:dev
+[ci-image]: https://img.shields.io/github/workflow/status/gulpjs/findup-sync/dev?style=flat-square
 [coveralls-url]: https://coveralls.io/r/gulpjs/findup-sync
 [coveralls-image]: https://img.shields.io/coveralls/gulpjs/findup-sync/master.svg
 
-[gitter-url]: https://gitter.im/gulpjs/gulp
-[gitter-image]: https://badges.gitter.im/gulpjs/gulp.svg
+<!-- prettier-ignore-nd -->
+
+<!-- prettier-ignore-start -->
+
+[micromatch]: http://github.com/jonschlinkert/micromatch
+
+<!-- prettier-ignore-nd -->

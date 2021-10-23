@@ -12,7 +12,7 @@
   "repository": "gulpjs/findup-sync",
   "license": "MIT",
   "engines": {
-    "node": ">= 8"
+    "node": ">= 10.13.0"
   },
   "main": "index.js",
   "files": [
@@ -22,26 +22,33 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "nyc mocha --async-only",
-    "azure-pipelines": "nyc mocha --async-only --reporter xunit -O output=test.xunit",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc mocha --async-only"
   },
   "dependencies": {
     "detect-file": "^1.0.0",
-    "is-glob": "^4.0.0",
-    "micromatch": "^4.0.2",
+    "is-glob": "^4.0.3",
+    "micromatch": "^4.0.4",
     "resolve-dir": "^1.0.1"
   },
   "devDependencies": {
-    "coveralls": "github:phated/node-coveralls#2.x",
-    "eslint": "^6.0.1",
-    "eslint-config-gulp": "^3.0.1",
-    "expect": "^1.20.2",
-    "homedir-polyfill": "^1.0.1",
+    "eslint": "^7.21.0",
+    "eslint-config-gulp": "^5.0.1",
+    "eslint-plugin-node": "^11.1.0",
+    "expect": "^27.3.1",
+    "homedir-polyfill": "^1.0.3",
     "mocha": "^6.1.4",
     "normalize-path": "^3.0.0",
-    "nyc": "^14.1.1",
-    "resolve": "^1.4.0"
+    "nyc": "^15.1.0",
+    "resolve": "^1.20.0"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true
   },
   "keywords": [
     "file",
