@@ -51,6 +51,6 @@ MIT
 
 <!-- prettier-ignore-start -->
 
-[micromatch]: http://github.com/jonschlinkert/micromatch
+[micromatch]: http://github.com/micromatch/micromatch
 
 <!-- prettier-ignore-nd -->
