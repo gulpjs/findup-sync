@@ -19,104 +19,122 @@ var npm = support.npm;
 var isLinux = process.platform === 'linux';
 var cwd, actual;
 
-describe('findup-sync', function() {
-
-  before(function(done) {
+describe('findup-sync', function () {
+  before(function (done) {
     fs.writeFileSync(home() + '/_aaa.txt', '');
     fs.writeFileSync(home() + '/_bbb.txt', '');
     done();
   });
 
-  after(function(done) {
+  after(function (done) {
     fs.unlinkSync(home() + '/_aaa.txt');
     fs.unlinkSync(home() + '/_bbb.txt');
     done();
   });
 
-  it('should throw when the first arg is not a string or array:', function(cb) {
+  it('should throw when the first arg is not a string or array:', function (cb) {
     try {
       findup();
       cb(new Error('expected an error'));
     } catch (err) {
-      expect(err.message).toEqual('findup-sync expects a string or array as the first argument.');
+      expect(err.message).toEqual(
+        'findup-sync expects a string or array as the first argument.'
+      );
       cb();
     }
   });
 
-  it('should work when no cwd is given', function(done) {
+  it('should work when no cwd is given', function (done) {
     var actual = findup('package.json');
-    expect(actual).toExist();
+    expect(actual).toBeTruthy();
     expect(actual).toHaveDirname(path.resolve(__dirname, '..'));
     expect(actual).toHaveBasename('package.json');
     expect(normalize(findup('package.json'))).toEqual('package.json');
     done();
   });
 
-  it('should find files in a child directory', function(done) {
+  it('should find files in a child directory', function (done) {
     var expected = path.resolve(__dirname, 'fixtures/a/b/file.txt');
     var restore = chdir(path.resolve(__dirname, 'fixtures/a/b/c/d/e/f/g/h'));
 
     var actual = findup('a/b/file.txt');
-    expect(actual).toExist();
-    expect(exists(actual)).toExist();
+    expect(actual).toBeTruthy();
+    expect(exists(actual)).toBeTruthy();
     expect(actual).toEqual(expected);
     restore();
     done();
   });
 
-  it('should find case sensitive files in a child directory', function(done) {
-    var expected = path.resolve(__dirname, 'fixtures/a/b/', (isLinux ? 'Mochafile.txt' : 'mochafile.txt'));
+  it('should find case sensitive files in a child directory', function (done) {
+    var expected = path.resolve(
+      __dirname,
+      'fixtures/a/b/',
+      isLinux ? 'Mochafile.txt' : 'mochafile.txt'
+    );
     var restore = chdir(path.resolve(__dirname, 'fixtures/a/b/c/d/e/f/g/h'));
 
     var actual = findup('a/b/mochafile.txt', { nocase: true });
-    expect(actual).toExist();
-    expect(exists(actual)).toExist();
+    expect(actual).toBeTruthy();
+    expect(exists(actual)).toBeTruthy();
     expect(actual).toEqual(expected);
     restore();
     done();
   });
 
-  it('should find files in a child directory relative to a cwd', function(done) {
+  it('should find files in a child directory relative to a cwd', function (done) {
     var expectedFile = path.resolve(__dirname, 'fixtures/a/b/file.txt');
     var expectedA = path.resolve(__dirname, 'fixtures/a/a.txt');
     var tempDir = chdir(path.resolve(__dirname, 'fixtures'));
 
     var actualFile = findup('a/b/file.txt', { cwd: 'a/b/c/d' });
-    expect(actualFile).toExist();
-    expect(exists(actualFile)).toExist();
+    expect(actualFile).toBeTruthy();
+    expect(exists(actualFile)).toBeTruthy();
     expect(actualFile).toEqual(expectedFile);
 
     var actualA = findup('a.txt', { cwd: 'a/b/c/d/e/f' });
-    expect(actualA).toExist();
-    expect(exists(actualA)).toExist();
+    expect(actualA).toBeTruthy();
+    expect(exists(actualA)).toBeTruthy();
     expect(actualA).toEqual(expectedA);
     tempDir();
     done();
   });
 
-  it('should find case sensitive files in a child directory relative to a cwd', function(done) {
-    var expectedFile = path.resolve(__dirname, 'fixtures/a/b', (isLinux ? 'Mochafile.txt' : 'mochafile.txt'));
+  it('should find case sensitive files in a child directory relative to a cwd', function (done) {
+    var expectedFile = path.resolve(
+      __dirname,
+      'fixtures/a/b',
+      isLinux ? 'Mochafile.txt' : 'mochafile.txt'
+    );
     var expectedA = path.resolve(__dirname, 'fixtures/a/a.txt');
     var tempDir = chdir(path.resolve(__dirname, 'fixtures'));
 
-    var actualFile = findup('a/b/mochafile.txt', { cwd: 'a/b/c/d', nocase: true });
-    expect(actualFile).toExist();
-    expect(exists(actualFile)).toExist();
+    var actualFile = findup('a/b/mochafile.txt', {
+      cwd: 'a/b/c/d',
+      nocase: true,
+    });
+    expect(actualFile).toBeTruthy();
+    expect(exists(actualFile)).toBeTruthy();
     expect(actualFile).toEqual(expectedFile);
 
     var actualA = findup('a.txt', { cwd: 'a/b/c/d/e/f' });
-    expect(actualA).toExist();
-    expect(exists(actualA)).toExist();
+    expect(actualA).toBeTruthy();
+    expect(exists(actualA)).toBeTruthy();
     expect(actualA).toEqual(expectedA);
     tempDir();
     done();
   });
 
-  it('should support normal (non-glob) file paths:', function(done) {
-    var normPath = normalize(findup('package.json', { cwd: path.dirname(resolve.sync('normalize-path')) }));
+  it('should support normal (non-glob) file paths:', function (done) {
+    var normPath = normalize(
+      findup('package.json', {
+        cwd: path.dirname(resolve.sync('normalize-path')),
+      })
+    );
     expect(normPath).toEqual('node_modules/normalize-path/package.json');
 
-    var isGlob = normalize(findup('package.json', { cwd: path.dirname(resolve.sync('is-glob')) }));
+    var isGlob = normalize(
+      findup('package.json', { cwd: path.dirname(resolve.sync('is-glob')) })
+    );
     expect(isGlob).toEqual('node_modules/is-glob/package.json');
 
     cwd = path.dirname(resolve.sync('normalize-path'));
@@ -135,17 +153,28 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should support normal (non-glob) case sensitive file paths:', function(done) {
-    actual = findup('c/mochafile.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g', nocase: true });
+  it('should support normal (non-glob) case sensitive file paths:', function (done) {
+    actual = findup('c/mochafile.txt', {
+      cwd: 'test/fixtures/a/b/c/d/e/f/g',
+      nocase: true,
+    });
     expect(actual).toHaveBasename(isLinux ? 'Mochafile.txt' : 'mochafile.txt');
     expect(actual).toHaveDirname('test/fixtures/a/b/c');
     done();
   });
 
-  it('should support glob patterns', function(done) {
-    expect(normalize(findup('**/c/package.json', { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))).toEqual('test/fixtures/a/b/c/package.json');
-    expect(normalize(findup('**/one.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))).toEqual('test/fixtures/a/b/c/d/one.txt');
-    expect(normalize(findup('**/two.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))).toEqual('test/fixtures/a/b/c/two.txt');
+  it('should support glob patterns', function (done) {
+    expect(
+      normalize(
+        findup('**/c/package.json', { cwd: 'test/fixtures/a/b/c/d/e/f/g' })
+      )
+    ).toEqual('test/fixtures/a/b/c/package.json');
+    expect(
+      normalize(findup('**/one.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))
+    ).toEqual('test/fixtures/a/b/c/d/one.txt');
+    expect(
+      normalize(findup('**/two.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))
+    ).toEqual('test/fixtures/a/b/c/two.txt');
 
     var pkg = normalize(findup('p*.json', { cwd: npm('micromatch') }));
     expect(pkg).toEqual('node_modules/micromatch/package.json');
@@ -175,12 +204,35 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should support case sensitive glob patterns', function(done) {
-    expect(normalize(findup('**/c/mochafile.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g', nocase: true }))).toEqual('test/fixtures/a/b/c/Mochafile.txt');
-    expect(normalize(findup('**/one.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g', nocase: true }))).toEqual('test/fixtures/a/b/c/d/one.txt');
-    expect(normalize(findup('**/two.txt', { cwd: 'test/fixtures/a/b/c/d/e/f/g', nocase: true }))).toEqual('test/fixtures/a/b/c/two.txt');
+  it('should support case sensitive glob patterns', function (done) {
+    expect(
+      normalize(
+        findup('**/c/mochafile.txt', {
+          cwd: 'test/fixtures/a/b/c/d/e/f/g',
+          nocase: true,
+        })
+      )
+    ).toEqual('test/fixtures/a/b/c/Mochafile.txt');
+    expect(
+      normalize(
+        findup('**/one.txt', {
+          cwd: 'test/fixtures/a/b/c/d/e/f/g',
+          nocase: true,
+        })
+      )
+    ).toEqual('test/fixtures/a/b/c/d/one.txt');
+    expect(
+      normalize(
+        findup('**/two.txt', {
+          cwd: 'test/fixtures/a/b/c/d/e/f/g',
+          nocase: true,
+        })
+      )
+    ).toEqual('test/fixtures/a/b/c/two.txt');
 
-    expect(normalize(findup('mocha*', { cwd: 'test/fixtures/a/b/c', nocase: true }))).toEqual('test/fixtures/a/b/c/Mochafile.txt');
+    expect(
+      normalize(findup('mocha*', { cwd: 'test/fixtures/a/b/c', nocase: true }))
+    ).toEqual('test/fixtures/a/b/c/Mochafile.txt');
 
     var opts = { cwd: 'test/fixtures/a/b/c/d/e/f/g', nocase: true };
 
@@ -203,10 +255,18 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should support arrays of glob patterns', function(done) {
-    expect(normalize(findup(['**/c/package.json'], { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))).toEqual('test/fixtures/a/b/c/package.json');
-    expect(normalize(findup(['**/one.txt'], { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))).toEqual('test/fixtures/a/b/c/d/one.txt');
-    expect(normalize(findup(['**/two.txt'], { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))).toEqual('test/fixtures/a/b/c/two.txt');
+  it('should support arrays of glob patterns', function (done) {
+    expect(
+      normalize(
+        findup(['**/c/package.json'], { cwd: 'test/fixtures/a/b/c/d/e/f/g' })
+      )
+    ).toEqual('test/fixtures/a/b/c/package.json');
+    expect(
+      normalize(findup(['**/one.txt'], { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))
+    ).toEqual('test/fixtures/a/b/c/d/one.txt');
+    expect(
+      normalize(findup(['**/two.txt'], { cwd: 'test/fixtures/a/b/c/d/e/f/g' }))
+    ).toEqual('test/fixtures/a/b/c/two.txt');
 
     var opts = { cwd: 'test/fixtures/a/b/c/d/e/f/g' };
 
@@ -227,7 +287,7 @@ describe('findup-sync', function() {
     expect(actual).toHaveBasename('two.txt');
 
     actual = findup(['lslsl', '**/blah.txt'], opts);
-    expect(actual === null).toExist();
+    expect(actual === null).toBeTruthy();
 
     cwd = npm('is-glob');
     actual = findup(['lslsl', 'p*.json'], { cwd: cwd });
@@ -236,11 +296,17 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should support micromatch `matchBase` option:', function(done) {
+  it('should support micromatch `matchBase` option:', function (done) {
     var opts = { matchBase: true, cwd: 'test/fixtures/a/b/c/d/e/f/g' };
-    expect(normalize(findup('package.json', opts))).toEqual('test/fixtures/a/b/c/d/e/f/g/package.json');
-    expect(normalize(findup('one.txt', opts))).toEqual('test/fixtures/a/b/c/d/one.txt');
-    expect(normalize(findup('two.txt', opts))).toEqual('test/fixtures/a/b/c/two.txt');
+    expect(normalize(findup('package.json', opts))).toEqual(
+      'test/fixtures/a/b/c/d/e/f/g/package.json'
+    );
+    expect(normalize(findup('one.txt', opts))).toEqual(
+      'test/fixtures/a/b/c/d/one.txt'
+    );
+    expect(normalize(findup('two.txt', opts))).toEqual(
+      'test/fixtures/a/b/c/two.txt'
+    );
 
     actual = findup('package.json', opts);
     expect(actual).toHaveBasename('package.json');
@@ -256,16 +322,25 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should return `null` when no files are found:', function(done) {
-    var dep = normalize(findup('*.foo', { cwd: path.dirname(resolve.sync('micromatch')) }));
+  it('should return `null` when no files are found:', function (done) {
+    var dep = normalize(
+      findup('*.foo', { cwd: path.dirname(resolve.sync('micromatch')) })
+    );
     expect(dep).toEqual(null);
     expect(findup('**/b*.json', { cwd: npm('is-glob') })).toEqual(null);
-    expect(findup('foo.json', { cwd: 'test/fixtures/a/b/c/d/e/f/g' })).toEqual(null);
-    expect(findup('foo.json', { cwd: 'test/fixtures/a/b/c/d/e/f/g', matchBase: true })).toEqual(null);
+    expect(findup('foo.json', { cwd: 'test/fixtures/a/b/c/d/e/f/g' })).toEqual(
+      null
+    );
+    expect(
+      findup('foo.json', {
+        cwd: 'test/fixtures/a/b/c/d/e/f/g',
+        matchBase: true,
+      })
+    ).toEqual(null);
     done();
   });
 
-  it('should support finding file in immediate parent dir', function(done) {
+  it('should support finding file in immediate parent dir', function (done) {
     cwd = path.resolve(__dirname, 'fixtures/a/b/c');
     var actual = findup('a.md', { cwd: cwd });
     expect(actual).toHaveDirname(path.dirname(cwd));
@@ -273,7 +348,7 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should support micromatch `nocase` option:', function(done) {
+  it('should support micromatch `nocase` option:', function (done) {
     actual = findup('ONE.*', { cwd: 'test/fixtures/a/b/c/d' });
     expect(actual).toHaveBasename('ONE.txt');
     expect(actual).toHaveDirname('test/fixtures/a/b/c');
@@ -284,7 +359,7 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should find files from absolute paths:', function(done) {
+  it('should find files from absolute paths:', function (done) {
     var actual = findup('package.json', { cwd: __dirname });
 
     expect(actual).toHaveBasename('package.json');
@@ -300,24 +375,26 @@ describe('findup-sync', function() {
     done();
   });
 
-  it('should find files in user home:', function(done) {
+  it('should find files in user home:', function (done) {
     var actual = findup('*', { cwd: home() });
     expect(actual).isPath();
-    expect(exists(actual)).toExist();
+    expect(exists(actual)).toBeTruthy();
     expect(actual).toHaveDirname(home());
     done();
   });
 
-  it('should find files in user home using tilde expansion:', function(done) {
+  it('should find files in user home using tilde expansion:', function (done) {
     var actual = findup('*', { cwd: '~' });
     expect(actual).isPath();
-    expect(exists(actual)).toExist();
+    expect(exists(actual)).toBeTruthy();
     expect(actual).toHaveDirname(home());
     done();
   });
 
-  it('should match files in cwd before searching up', function(done) {
-    var actual = findup(['a.txt', 'a.md'], { cwd: __dirname + '/fixtures/a/b' });
+  it('should match files in cwd before searching up', function (done) {
+    var actual = findup(['a.txt', 'a.md'], {
+      cwd: __dirname + '/fixtures/a/b',
+    });
     expect(actual).toHaveBasename('a.md');
     expect(actual).toHaveDirname('test/fixtures/a/b');
     done();
