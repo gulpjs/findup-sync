@@ -43,7 +43,7 @@ MIT
 [npm-url]: https://www.npmjs.com/package/findup-sync
 [npm-image]: https://img.shields.io/npm/v/findup-sync.svg?style=flat-square
 [ci-url]: https://github.com/gulpjs/findup-sync/actions?query=workflow:dev
-[ci-image]: https://img.shields.io/github/workflow/status/gulpjs/findup-sync/dev?style=flat-square
+[ci-image]: https://img.shields.io/github/actions/workflow/status/gulpjs/findup-sync/dev.yml?branch=master&style=flat-square
 [coveralls-url]: https://coveralls.io/r/gulpjs/findup-sync
 [coveralls-image]: https://img.shields.io/coveralls/gulpjs/findup-sync/master.svg
 
