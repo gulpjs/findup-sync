@@ -9,17 +9,23 @@
     "Jon Schlinkert <jon.schlinkert@sellside.com>",
     "Blaine Bublitz <blaine.bublitz@gmail.com>"
   ],
-  "repository": "gulpjs/findup-sync",
+  "funding": "https://github.com/sponsors/gulpjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gulpjs/findup-sync.git"
+  },
   "license": "MIT",
   "engines": {
-    "node": ">= 10.13.0"
+    "node": ">= 22.15.0"
   },
-  "main": "index.js",
+  "main": "./index.js",
   "files": [
     "index.js",
     "LICENSE"
   ],
   "scripts": {
+    "format-check": "prettier . --check",
+    "format-write": "prettier . --write",
     "lint": "eslint .",
     "pretest": "npm run lint",
     "test": "nyc mocha --async-only"
@@ -31,14 +37,14 @@
     "resolve-dir": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.21.0",
-    "eslint-config-gulp": "^5.0.1",
-    "eslint-plugin-node": "^11.1.0",
+    "eslint": "10.11.0",
+    "eslint-config-gulp": "7.0.0",
     "expect": "^27.3.1",
     "homedir-polyfill": "^1.0.3",
     "mocha": "^6.1.4",
     "normalize-path": "^3.0.0",
     "nyc": "^15.1.0",
+    "prettier": "3.9.6",
     "resolve": "^1.20.0"
   },
   "nyc": {
@@ -46,9 +52,6 @@
       "lcov",
       "text-summary"
     ]
-  },
-  "prettier": {
-    "singleQuote": true
   },
   "keywords": [
     "file",

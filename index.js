@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
 /**
  * Module dependencies
  */
 
-var fs = require('fs');
-var path = require('path');
-var isGlob = require('is-glob');
-var resolveDir = require('resolve-dir');
-var detect = require('detect-file');
-var mm = require('micromatch');
+var fs = require("fs");
+var path = require("path");
+var isGlob = require("is-glob");
+var resolveDir = require("resolve-dir");
+var detect = require("detect-file");
+var mm = require("micromatch");
 
 /**
  * @param  {String|Array} `pattern` Glob pattern or file path(s) to match against.
@@ -20,15 +20,15 @@ var mm = require('micromatch');
 
 module.exports = function (patterns, options) {
   options = options || {};
-  var cwd = path.resolve(resolveDir(options.cwd || ''));
+  var cwd = path.resolve(resolveDir(options.cwd || ""));
 
-  if (typeof patterns === 'string') {
+  if (typeof patterns === "string") {
     return lookup(cwd, [patterns], options);
   }
 
   if (!Array.isArray(patterns)) {
     throw new TypeError(
-      'findup-sync expects a string or array as the first argument.'
+      "findup-sync expects a string or array as the first argument.",
     );
   }
 
@@ -82,7 +82,7 @@ function findFile(cwd, filename, options) {
 function tryReaddirSync(fp) {
   try {
     return fs.readdirSync(fp);
-  } catch (err) {
+  } catch {
     // Ignore error
   }
   /* istanbul ignore next */
