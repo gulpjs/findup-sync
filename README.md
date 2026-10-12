@@ -58,3 +58,7 @@ MIT
 [coveralls-url]: https://coveralls.io/r/gulpjs/findup-sync
 [coveralls-image]: https://img.shields.io/coveralls/gulpjs/findup-sync/main.svg?style=flat-square
 <!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+[micromatch]: http://github.com/micromatch/micromatch
+<!-- prettier-ignore-end -->
