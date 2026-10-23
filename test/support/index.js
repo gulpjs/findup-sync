@@ -1,6 +1,8 @@
 "use strict";
 
-var path = require("path");
+const assert = require("node:assert/strict");
+
+const path = require("node:path");
 var normalizePath = require("normalize-path");
 var resolve = require("resolve");
 
@@ -32,32 +34,19 @@ function matcherResult(pass, msg) {
   };
 }
 
-exports.expectExtras = {
-  isPath: function (actual) {
-    if (typeof actual === "string") {
-      return matcherResult(true, "");
-    }
-    return matcherResult(false, '"' + actual + '" is not a string');
+exports.assertExtras = {
+  isPath(actual) {
+    assert.strictEqual(typeof actual, "string");
   },
-  toHaveBasename: function (actual, basename) {
-    var fileName = path.basename(actual);
-    if (fileName === basename) {
-      return matcherResult(true, "");
-    }
-    return matcherResult(
-      false,
-      'The basename of "' + actual + '" is not equal to "' + basename + '".',
-    );
+
+  toHaveBasename(actual, basename) {
+    assert.strictEqual(path.basename(actual), basename);
   },
-  toHaveDirname: function (actual, dirname) {
-    var filePath = path.dirname(path.resolve(actual));
-    var expected = path.resolve(dirname);
-    if (filePath === expected) {
-      return matcherResult(true, "");
-    }
-    return matcherResult(
-      false,
-      'The direname of "' + actual + '" is not equal to "' + expected + '".',
+
+  toHaveDirname(actual, dirname) {
+    assert.strictEqual(
+      path.dirname(path.resolve(actual)),
+      path.resolve(dirname),
     );
   },
 };
