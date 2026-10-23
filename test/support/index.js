@@ -25,15 +25,6 @@ exports.npm = function npm(name) {
   return path.dirname(resolve.sync(name));
 };
 
-function matcherResult(pass, msg) {
-  return {
-    pass: pass,
-    message: function () {
-      return msg;
-    },
-  };
-}
-
 exports.assertExtras = {
   isPath(actual) {
     assert.strictEqual(typeof actual, "string");

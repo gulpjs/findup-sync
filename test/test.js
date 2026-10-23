@@ -391,14 +391,14 @@ describe("findup-sync", function () {
     var actual = findup("*", { cwd: home() });
     assertExtras.isPath(actual);
     assert.ok(exists(actual));
-    assertExtras.toHaveBasename(actual, home());
+    assertExtras.toHaveDirname(actual, home());
   });
 
   it("should find files in user home using tilde expansion:", function () {
     var actual = findup("*", { cwd: "~" });
     assertExtras.isPath(actual);
     assert.ok(exists(actual));
-    assertExtras.toHaveBasename(actual, home());
+    assertExtras.toHaveDirname(actual, home());
   });
 
   it("should match files in cwd before searching up", function () {
