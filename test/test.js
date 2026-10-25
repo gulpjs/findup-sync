@@ -10,7 +10,7 @@ var home = require("homedir-polyfill");
 var resolve = require("resolve");
 
 var support = require("./support");
-const { assertExtras } = require("./support");
+var { assertExtras } = require("./support");
 
 var findup = require("../");
 
