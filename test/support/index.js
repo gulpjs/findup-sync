@@ -2,7 +2,7 @@
 
 const assert = require("node:assert/strict");
 
-const path = require("node:path");
+var path = require("node:path");
 var normalizePath = require("normalize-path");
 var resolve = require("resolve");
 
