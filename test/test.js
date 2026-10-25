@@ -1,10 +1,9 @@
 "use strict";
 
-var assert = require("node:assert");
-var { after, before, describe, it } = require("node:test");
-
 var fs = require("node:fs");
 var path = require("node:path");
+var assert = require("node:assert");
+var { after, before, describe, it } = require("node:test");
 
 var home = require("homedir-polyfill");
 var resolve = require("resolve");
